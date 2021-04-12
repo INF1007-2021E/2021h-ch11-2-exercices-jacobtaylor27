@@ -12,7 +12,7 @@ from character import *
 
 
 # TODO: Créer la classe Spell qui a les même propriétés que Weapon, mais avec un coût en MP pour l'utiliser
-class Spell:
+class Spell(Weapon):
 	"""
 	Un sort dans le jeu.
 
@@ -23,10 +23,13 @@ class Spell:
 	"""
 
 	# TODO: __init__
-	pass
+	def __init__(self, name, power, min_level, mp_cost) -> None:
+		super().__init__(name, power, min_level)
+		self.cost = mp_cost
+		
 
 # TODO: Déclarer la classe Magician qui étend la classe Character
-class Magician:
+class Magician(Character):
 	"""
 	Un utilisateur de magie dans le jeu. Un magicien peut utiliser des sorts, mais peut aussi utiliser des armes physiques. Sa capacité à utiliser des sorts dépend 
 
@@ -43,8 +46,11 @@ class Magician:
 
 	def __init__(self, name, max_hp, max_mp, attack, magic_attack, defense, level):
 		# TODO: Initialiser les attributs de Character
+		super().__init__(name, max_hp, attack, defense, level)
 		# TODO: Initialiser le `magic_attack` avec le paramètre, le `max_mp` et `mp` de la même façon que `max_hp` et `hp`, `spell` à None et `using_magic` à False.
-		pass
+		self.max_mp = max_mp
+		self.mp = max_mp
+		self.magic_attack = magic_attack
 
 	@property
 	def mp(self):
