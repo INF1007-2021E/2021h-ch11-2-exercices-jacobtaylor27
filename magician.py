@@ -48,21 +48,35 @@ class Magician(Character):
 		# TODO: Initialiser les attributs de Character
 		super().__init__(name, max_hp, attack, defense, level)
 		# TODO: Initialiser le `magic_attack` avec le paramètre, le `max_mp` et `mp` de la même façon que `max_hp` et `hp`, `spell` à None et `using_magic` à False.
+		self.magic_attack = magic_attack
 		self.max_mp = max_mp
 		self.mp = max_mp
-		self.magic_attack = magic_attack
+		self.spell = None
+		self.using_magic = False
 
 	@property
 	def mp(self):
-		pass
+		return self.__mp
 
 	@mp.setter
 	def mp(self, val):
-		pass
+		self.__mp = utils.clamp(val, 0, self.max_mp)
 
 	# TODO: Écrire les getter/setter pour la propriété `spell`.
 	#       On peut affecter None.
 	#       Si le niveau minimal d'un sort est supérieur au niveau du personnage, on lève ValueError.
+	@property
+	def spell(self):
+		return self.__spell
+
+	@spell.setter
+	def spell(self, val):
+		if val is None:
+			val = None
+		if self.level < self.magic_attack:
+			raise ValueError('Niveau pas assez élevé')
+		self.__spell = val
+		
 
 	# TODO: Surcharger la méthode `compute_damage` 
 	def compute_damage(self, other):
