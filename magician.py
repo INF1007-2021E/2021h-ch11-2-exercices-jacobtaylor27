@@ -24,7 +24,7 @@ class Spell(Weapon):
 	# TODO: __init__
 	def __init__(self, name, power, min_level, mp_cost) -> None:
 		super().__init__(name, power, min_level)
-		self.cost = mp_cost
+		self.mp_cost = mp_cost
 		
 
 # TODO: Déclarer la classe Magician qui étend la classe Character
@@ -79,20 +79,19 @@ class Magician(Character):
 
 	# TODO: Surcharger la méthode `compute_damage` 
 	def compute_damage(self, other):
-		# Si le magicien va utiliser sa magie (`will_use_spell()`):
-			# Soustraire à son MP le coût du sort
-			# Retourner le résultat du calcul de dégâts magiques
-		# Sinon
-			# Retourner le résultat du calcul de dégâts physiques
-		pass
+		if self.will_use_spell():
+			self._compute_magical_damage(self,other)
+		else:
+			self._compute_physical_damage(self,other)
 
 	def will_use_spell(self):
-		pass
+		self.using_magic = True
+		return True
 
 	def _compute_magical_damage(self, other):
 		pass
 
 	def _compute_physical_damage(self, other):
 		# TODO: Calculer le dommage physique exactement de la même façon que dans `Character`
-		pass
+		return super().compute_damage(self.level, self.weapon.power, self.attack, other.defense, 1/16, (0.85, 1.00))
 
