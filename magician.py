@@ -61,9 +61,6 @@ class Magician(Character):
 	def mp(self, val):
 		self.__mp = utils.clamp(val, 0, self.max_mp)
 
-	# TODO: Écrire les getter/setter pour la propriété `spell`.
-	#       On peut affecter None.
-	#       Si le niveau minimal d'un sort est supérieur au niveau du personnage, on lève ValueError.
 	@property
 	def spell(self):
 		return self.__spell
@@ -89,7 +86,7 @@ class Magician(Character):
 		return True
 
 	def _compute_magical_damage(self, other):
-		pass
+		super().compute_damage_output(self.level, self.spell.power, self.attack, other.defense, 1/16, (0.85, 1.00))
 
 	def _compute_physical_damage(self, other):
 		# TODO: Calculer le dommage physique exactement de la même façon que dans `Character`
