@@ -79,7 +79,7 @@ class Magician(Character):
 			self._compute_physical_damage(self,other)
 
 	def will_use_spell(self):
-		if self.using_magic and self.spell != None and self.level >= self.magic_attack:
+		if self.using_magic and self.spell is not None and self.mp >= self.spell.mp_cost:
 			return True
 	
 	def _compute_magical_damage(self, other):
