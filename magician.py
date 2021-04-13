@@ -65,25 +65,19 @@ class Magician(Character):
 
 	@spell.setter
 	def spell(self, val):
-		if val is None:
-			val = None
-		if self.level < self.magic_attack:
+		if val is not None and val.min_level > self.level:
 			raise ValueError('Niveau pas assez élevé')
-		self.__spell = val
-		
+		self.__spell = val	
 
 	def compute_damage(self, other):
 		if self.will_use_spell():
-			self._compute_magical_damage(self,other)
-		else:
-			self._compute_physical_damage(self,other)
+			self.mp -= self.__spell.mp_cost
+			return self._compute_magical_damage(other)
+		return self._compute_physical_damage(other)
 
 	def will_use_spell(self):
-		if self.using_magic and self.spell is not None and self.mp >= self.spell.mp_cost:
-			return True
-		else:
-			return False
-	
+		return self.using_magic and self.__spell is not None and self.mp >= self.__spell.mp_cost
+
 	def _compute_magical_damage(self, other):
 		super().compute_damage_output(self.level + self.magic_attack, self.spell.power, 1, 1, 1/16, (0.85, 1.00))
 
