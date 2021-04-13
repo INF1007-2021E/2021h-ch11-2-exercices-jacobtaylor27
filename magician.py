@@ -44,9 +44,7 @@ class Magician(Character):
 	"""
 
 	def __init__(self, name, max_hp, max_mp, attack, magic_attack, defense, level):
-		# TODO: Initialiser les attributs de Character
 		super().__init__(name, max_hp, attack, defense, level)
-		# TODO: Initialiser le `magic_attack` avec le paramètre, le `max_mp` et `mp` de la même façon que `max_hp` et `hp`, `spell` à None et `using_magic` à False.
 		self.magic_attack = magic_attack
 		self.max_mp = max_mp
 		self.mp = max_mp
@@ -74,7 +72,6 @@ class Magician(Character):
 		self.__spell = val
 		
 
-	# TODO: Surcharger la méthode `compute_damage` 
 	def compute_damage(self, other):
 		if self.will_use_spell():
 			self._compute_magical_damage(self,other)
@@ -82,13 +79,12 @@ class Magician(Character):
 			self._compute_physical_damage(self,other)
 
 	def will_use_spell(self):
-		self.using_magic = True
-		return True
-
+		if self.using_magic and self.spell != None and self.level >= self.magic_attack:
+			return True
+	
 	def _compute_magical_damage(self, other):
-		super().compute_damage_output(self.level, self.spell.power, self.attack, other.defense, 1/16, (0.85, 1.00))
+		super().compute_damage_output(self.level + self.magic_attack, self.spell.power, 1, 1, 1/16, (0.85, 1.00))
 
 	def _compute_physical_damage(self, other):
-		# TODO: Calculer le dommage physique exactement de la même façon que dans `Character`
 		return super().compute_damage(self.level, self.weapon.power, self.attack, other.defense, 1/16, (0.85, 1.00))
 
