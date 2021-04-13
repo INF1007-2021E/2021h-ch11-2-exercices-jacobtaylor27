@@ -79,8 +79,8 @@ class Magician(Character):
 		return self.using_magic and self.__spell is not None and self.mp >= self.__spell.mp_cost
 
 	def _compute_magical_damage(self, other):
-		super().compute_damage_output(self.level + self.magic_attack, self.spell.power, 1, 1, 1/16, (0.85, 1.00))
+		return Character.compute_damage_output(self.level + self.magic_attack, self.spell.power, 1, 1, 1/8, (0.85, 1.00))
 
 	def _compute_physical_damage(self, other):
-		return super().compute_damage(self.level, self.weapon.power, self.attack, other.defense, 1/16, (0.85, 1.00))
+		return super().compute_damage(other)
 
